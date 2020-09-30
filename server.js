@@ -8,7 +8,7 @@ const cors = require('cors')
 const http = require('http')
 const server = http.createServer(app)
 const socket = require('socket.io')
-const io = socket(server, {transports: ['websocket']})
+const io = socket(server)
 
 const PORT = process.env.PORT || 3001
 const MONGO_URI = process.env.MONGO_URI
