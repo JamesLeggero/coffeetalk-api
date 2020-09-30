@@ -55,4 +55,10 @@ router.post("/signup", (req, res) => {
     }
   });
 
+  router.get('/:id', (req, res) => {
+    Farmer.findById(req.params.id, (error, foundFarmer) => {
+        error ? res.status(404).json(error) : res.status(200).json(foundFarmer); 
+    });
+});
+
 module.exports = router
