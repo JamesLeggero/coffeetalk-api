@@ -16,7 +16,7 @@ mongoose.connect(MONGO_URI, {
     useFindAndModify: false
 })
 db.on('open', () => {
-    console.log('TALK')
+    console.log('TALK' + PORT)
 })
 app.use(cors())
 app.use(express.json())
