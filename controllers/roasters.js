@@ -6,6 +6,13 @@ const passport = require('../config/passport.js')
 const config = require('../config/config.js')
 const Roaster = require('../models/roaster.js')
 
+router.get('/', (req,res) => {
+    Roaster.find({}, (error, allRoasters) => {
+        error ? res.status(404).json(error) :
+        res.status(200).json(allRoasters)
+    })
+})
+
 router.post("/signup", (req, res) => {
     console.log(req.body);
     if (req.body.username && req.body.password) {
