@@ -1,12 +1,10 @@
 const express = require('express')
-const router = express.Router()
+const router = express.Router();
 const jwt = require('jwt-simple')
 const bcrypt = require('bcrypt')
-
 const passport = require('../config/passport.js')
-const config = require('../config/config')
-
-const Roaster = require('../models/roaster')
+const config = require('../config/config.js')
+const Roaster = require('../models/roaster.js')
 
 router.post("/signup", (req, res) => {
     console.log(req.body);
