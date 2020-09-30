@@ -18,7 +18,7 @@ router.post("/signup", (req, res) => {
         bcrypt.genSaltSync(10)
       );
   
-      User.findOne({ username: req.body.username }, (roaster) => {
+      Roaster.findOne({ username: req.body.username }, (roaster) => {
         console.log("========findOne=======", roaster);
         if (!roaster) {
           console.log("Running create roaster");

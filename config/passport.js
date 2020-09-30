@@ -5,7 +5,7 @@ const Strategy = passportJWT.Strategy;
 
 const config = require("./config");
 
-const User = require("../models/user.js");
+const Roaster = require("../models/roaster.js");
 
 const params = {
   secretOrKey: config.jwtSecret,
@@ -14,13 +14,13 @@ const params = {
 
 module.exports = function () {
   const strategy = new Strategy(params, (payload, callback) => {
-    const user = User.findById(payload.id) || null;
-    if (user) {
+    const roaster = Roaster.findById(payload.id) || null;
+    if (roaster) {
       return callback(null, {
-        id: user.id,
+        id: roaster.id,
       });
     } else {
-      return callback(new Error("User not found"), null);
+      return callback(new Error("Roaster not found"), null);
     }
   });
   passport.use(strategy);
