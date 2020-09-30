@@ -25,7 +25,7 @@ app.use(passport.initialize())
 const roasterController = require('./controllers/roasters.js')
 
 app.use('/roasters', roasterController)
-// app.use('/farmers', require('./controllers/farmers.js'))
+app.use('/farmers', require('./controllers/farmers.js'))
 
 app.listen(PORT, () => {
     console.log(`COFFEE`)
