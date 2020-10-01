@@ -1,5 +1,4 @@
 require('dotenv').config()
-const passport = require('./config/passport')()
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
@@ -9,9 +8,12 @@ const http = require('http')
 const server = http.createServer(app)
 const socket = require('socket.io')
 const io = socket(server)
+const axios = require('axios')
+const passport = require('./config/passport')()
 
 const PORT = process.env.PORT || 3001
 const MONGO_URI = process.env.MONGO_URI
+const WEATHER_API_KEY = process.env.WEATHER_API_KEY
 const db = mongoose.connection
 
 mongoose.connect(MONGO_URI, {
@@ -28,8 +30,19 @@ app.use(passport.initialize())
 
 const roasterController = require('./controllers/roasters.js')
 
+
 app.use('/roasters', roasterController)
 app.use('/farmers', require('./controllers/farmers.js'))
+
+app.get ('/', async (req, res) => {
+    try {
+    const response = await axios.get('http://api.openweathermap.org/data/2.5/weather?units=imperial&id=::thing' + WEATHER_API_KEY)
+    await console.log(rec.params.thing)
+    await console.log(response.data)
+    } catch (error) {
+        console.error(error)
+    }
+})
 
 // const rooms = {}
 
