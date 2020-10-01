@@ -34,12 +34,23 @@ const roasterController = require('./controllers/roasters.js')
 app.use('/roasters', roasterController)
 app.use('/farmers', require('./controllers/farmers.js'))
 
-app.get ('/', async (req, res) => {
+app.get('/', (req, res)=>{
+    res.send('get outta here')
+})
+
+app.get ('/:cityID', async (req, res) => {
+    const cityID = req.params.cityID
+    // const cityID = req.params.cityID + " from BE"
+    const url = `http://api.openweathermap.org/data/2.5/weather?units=imperial&id=${cityID}&appid=${WEATHER_API_KEY}`
+    // console.log(url)
     try {
-    const response = await axios.get('http://api.openweathermap.org/data/2.5/weather?units=imperial&id=::thing' + WEATHER_API_KEY)
-    await console.log(rec.params.thing)
-    await console.log(response.data)
-    } catch (error) {
+    const response = await axios.get(url)
+    const data = await response.data
+    // await console.log(data)
+    res.json(data)
+    // res.json(url)
+    // res.json(cityID)
+    } catch {
         console.error(error)
     }
 })
