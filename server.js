@@ -41,8 +41,8 @@ app.get('/', (req, res)=>{
 })
 
 app.get('/sms/:phone', (req, res) => {
-    const phone = req.params.phone
-    console.log(phone)
+    const phone = req.params.phone + 'from BE'
+    
     res.json(phone)
 
 }) 
@@ -51,11 +51,11 @@ app.get ('/weather/:cityID', async (req, res) => {
     const cityID = req.params.cityID
     // const cityID = req.params.cityID + " from BE"
     const url = `http://api.openweathermap.org/data/2.5/weather?units=imperial&id=${cityID}&appid=${WEATHER_API_KEY}`
-    console.log(url)
+    
     try {
     const response = await axios.get(url)
     const data = await response.data
-    await console.log(data.name, data.sys.country, '\n')
+    console.log(data.name, data.sys.country, '\n')
     res.json(data)
     // res.json(url)
     // res.json(cityID)
