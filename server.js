@@ -14,6 +14,8 @@ const passport = require('./config/passport')()
 const PORT = process.env.PORT || 3001
 const MONGO_URI = process.env.MONGO_URI
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY
+const TM_USERNAME = process.env.TM_USERNAME
+const TM_API_KEY = process.env.TM_API_KEY
 const db = mongoose.connection
 
 mongoose.connect(MONGO_URI, {
@@ -38,7 +40,14 @@ app.get('/', (req, res)=>{
     res.send('get outta here')
 })
 
-app.get ('/:cityID', async (req, res) => {
+app.get('/sms/:phone', (req, res) => {
+    const phone = req.params.phone
+    console.log(phone)
+    res.json(phone)
+
+}) 
+
+app.get ('/weather/:cityID', async (req, res) => {
     const cityID = req.params.cityID
     // const cityID = req.params.cityID + " from BE"
     const url = `http://api.openweathermap.org/data/2.5/weather?units=imperial&id=${cityID}&appid=${WEATHER_API_KEY}`
@@ -46,7 +55,7 @@ app.get ('/:cityID', async (req, res) => {
     try {
     const response = await axios.get(url)
     const data = await response.data
-    await console.log(data)
+    await console.log(data.name, data.sys.country, '\n')
     res.json(data)
     // res.json(url)
     // res.json(cityID)
