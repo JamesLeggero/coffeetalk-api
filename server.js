@@ -46,7 +46,7 @@ app.get ('/:cityID', async (req, res) => {
     try {
     const response = await axios.get(url)
     const data = await response.data
-    // await console.log(data)
+    await console.log(data)
     res.json(data)
     // res.json(url)
     // res.json(cityID)
