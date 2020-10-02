@@ -55,11 +55,11 @@ app.get ('/weather/:cityID', async (req, res) => {
     try {
     const response = await axios.get(url)
     const data = await response.data
-    console.log(data.name, data.sys.country, '\n')
+    console.log(data.name, data.weather[0].description, '\n')
     res.json(data)
     // res.json(url)
     // res.json(cityID)
-    } catch {
+    } catch (error){
         console.error(error)
     }
 })
