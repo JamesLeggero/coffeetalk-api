@@ -13,6 +13,8 @@ router.get('/', (req,res) => {
     })
 })
 
+
+
 router.post("/signup", (req, res) => {
     console.log(req.body);
     if (req.body.username && req.body.password) {
@@ -47,6 +49,38 @@ router.post("/signup", (req, res) => {
           });
         } else {
           console.log("Roaster already exists, try logging in instead");
+          res.sendStatus(401);
+        }
+      });
+    } else {
+      res.sendStatus(401);
+    }
+  });
+
+  router.post("/login", (req, res) => {
+    if (req.body.username && req.body.password) {
+      console.log(req.body.username);
+      Roaster.findOne({ username: req.body.username }, (error, roaster) => {
+        if (error) console.log(error);
+        if (roaster) {
+          console.log("Found roaster. Checking password...");
+          if (bcrypt.compareSync(req.body.password, roaster.password)) {
+            console.log("Password correct, generating JWT...");
+            let payload = {
+              id: roaster.id,
+              username: roaster.username
+            };
+            let token = jwt.encode(payload, config.jwtSecret);
+            console.log(token);
+            res.json({
+              token: token,
+            });
+          } else {
+            console.log("Wrong password");
+            res.sendStatus(401);
+          }
+        } else {
+          console.log("Couldn't find roaster. Try signing up.");
           res.sendStatus(401);
         }
       });
