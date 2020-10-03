@@ -30,21 +30,22 @@ router.post("/signup", (req, res) => {
           Farmer.create(req.body, (error, createdFarmer) => {
             console.log("createdFarmer", createdFarmer);
             console.log("error", error);
-            // if (createdFarmer) {
-            //   let payload = {
-            //     id: createdFarmer.id,
-            //   };
-            //   console.log(payload);
-            //   let token = jwt.encode(payload, config.jwtSecret);
-            //   console.log(token);
-            //   res.json({
-            //     token: token,
-            //   })
+            if (createdFarmer) {
+              // let payload = {
+              //   id: createdFarmer.id,
+              // };
+              // console.log(payload);
+              // let token = jwt.encode(payload, config.jwtSecret);
+              // console.log(token);
+              // res.json({
+              //   token: token,
+              // })
+              res.json({createdFarmer})
               
-            // } else {
-            //   console.log("failed to create farmer");
-            //   res.sendStatus(401);
-            // }
+            } else {
+              console.log("failed to create farmer");
+              res.sendStatus(401);
+            }
           });
         } else {
           console.log("Farmer already exists");
