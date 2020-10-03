@@ -46,11 +46,15 @@ app.get('/sms/:roomID', async (req, res) => {
     try {
         const link = `https://jml-coffeetalk-client.herokuapp.com/room/${req.params.roomID}`
         const farmerID = link.slice(-48, -24)
+        const roasterID = link.slice(-24)
         const farmerResponse = await axios.get(`https://jml-coffeetalk-api.herokuapp.com/farmers/${farmerID}`)
         const farmerData = await farmerResponse.data
-        const c = await new TMClient(TM_USERNAME, TM_API_KEY)
+        const roasterResponse = await axios.get(`https://jml-coffeetalk-api.herokuapp.com/roasters/${roasterID}`)
+        const roasterData = await roasterResponse.data
+        const c = new TMClient(TM_USERNAME, TM_API_KEY)
+
         await c.Messages.send({
-            text: `Someone from Coffeetalk would like to speak to you! \n The link is ${link}`, 
+            text: `${roasterData.username} from Coffeetalk would like to speak to you! \n The link is ${link}`, 
             phones: farmerData.phoneNumber}, (err, res) => {
                 console.log(`Message sent to ${farmerData.username}`)
             })
