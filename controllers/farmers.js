@@ -15,13 +15,13 @@ router.get('/', (req,res) => {
 
 router.post("/signup", (req, res) => {
     console.log(req.body);
-    if (req.body.username && req.body.password) {
+    if (req.body.username) {
     
-      // Hash the password:
-      req.body.password = bcrypt.hashSync(
-        req.body.password,
-        bcrypt.genSaltSync(10)
-      );
+      // // Hash the password:
+      // req.body.password = bcrypt.hashSync(
+      //   req.body.password,
+      //   bcrypt.genSaltSync(10)
+      // );
   
       Farmer.findOne({ username: req.body.username }, (farmer) => {
         console.log("========findOne=======", farmer);
@@ -30,24 +30,24 @@ router.post("/signup", (req, res) => {
           Farmer.create(req.body, (error, createdFarmer) => {
             console.log("createdFarmer", createdFarmer);
             console.log("error", error);
-            if (createdFarmer) {
-              let payload = {
-                id: createdFarmer.id,
-              };
-              console.log(payload);
-              let token = jwt.encode(payload, config.jwtSecret);
-              console.log(token);
-              res.json({
-                token: token,
-              })
+            // if (createdFarmer) {
+            //   let payload = {
+            //     id: createdFarmer.id,
+            //   };
+            //   console.log(payload);
+            //   let token = jwt.encode(payload, config.jwtSecret);
+            //   console.log(token);
+            //   res.json({
+            //     token: token,
+            //   })
               
-            } else {
-              console.log("failed to create farmer");
-              res.sendStatus(401);
-            }
+            // } else {
+            //   console.log("failed to create farmer");
+            //   res.sendStatus(401);
+            // }
           });
         } else {
-          console.log("Farmer already exists, try logging in instead");
+          console.log("Farmer already exists");
           res.sendStatus(401);
         }
       });
