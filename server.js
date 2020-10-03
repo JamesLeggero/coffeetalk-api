@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const path = require('path')
+const TMClient = require('textmagic-rest-client')
 const cors = require('cors')
 const http = require('http')
 const server = http.createServer(app)
@@ -40,10 +41,29 @@ app.get('/', (req, res)=>{
     res.send('get outta here')
 })
 
-app.get('/sms/:phone', (req, res) => {
-    const phone = req.params.phone + 'from BE'
+app.get('/sms/:roomID', async (req, res) => {
+
+    try {
+        const link = `http://localhost:3002/room/${req.params.roomID}`
+        const farmerID = link.slice(-48, -24)
+        const farmerResponse = await axios.get(`https://jml-coffeetalk-api.herokuapp.com/farmers/${farmerID}`)
+        const farmerData = await farmerResponse.data
+        const c = new TMClient(TM_USERNAME, TM_API_KEY)
+        c.Messages.send({
+            text: `Someone from Coffeetalk would like to speak to you! \n The link is ${link}`, 
+            phones: farmerData.phoneNumber}, (err, res) => {
+                console.log(`Message sent to ${farmerData.username}`)
+            })
+
     
-    res.json(phone)
+        
+        
+    } catch (error) {
+        console.error(error)
+    }
+    
+    
+    
 
 }) 
 
