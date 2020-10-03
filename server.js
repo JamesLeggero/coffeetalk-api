@@ -44,12 +44,12 @@ app.get('/', (req, res)=>{
 app.get('/sms/:roomID', async (req, res) => {
 
     try {
-        const link = `http://localhost:3002/room/${req.params.roomID}`
+        const link = `https://jml-coffeetalk-client.herokuapp.com/room/${req.params.roomID}`
         const farmerID = link.slice(-48, -24)
         const farmerResponse = await axios.get(`https://jml-coffeetalk-api.herokuapp.com/farmers/${farmerID}`)
         const farmerData = await farmerResponse.data
-        const c = new TMClient(TM_USERNAME, TM_API_KEY)
-        c.Messages.send({
+        const c = await new TMClient(TM_USERNAME, TM_API_KEY)
+        await c.Messages.send({
             text: `Someone from Coffeetalk would like to speak to you! \n The link is ${link}`, 
             phones: farmerData.phoneNumber}, (err, res) => {
                 console.log(`Message sent to ${farmerData.username}`)
