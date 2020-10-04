@@ -41,7 +41,7 @@ router.post("/signup", (req, res) => {
             console.log(token);
             res.json({
               token: token,
-              id = roaster._id
+              id: roaster._id
             });
           } else {
             console.log("failed to create roaster");
