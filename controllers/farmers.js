@@ -40,7 +40,7 @@ router.post("/signup", (req, res) => {
               // res.json({
               //   token: token,
               // })
-              res.status(200).json(createdFarmer)
+              res.status(200).json({createdFarmer})
               
             } else {
               console.log("failed to create farmer");
