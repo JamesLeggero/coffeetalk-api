@@ -30,8 +30,7 @@ router.post("/signup", (req, res) => {
       if (!roaster) {
         console.log("Running create roaster");
         Roaster.create(req.body, (error, createdRoaster) => {
-          console.log("createdRoaster", createdRoaster);
-          console.log("error", error);
+          if (error) res.status(401).json(error);
           if (createdRoaster) {
             let payload = {
               id: createdRoaster.id,
