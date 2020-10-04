@@ -6,7 +6,7 @@ const FarmerSchema = new mongoose.Schema(
         // password: {type: String, required: true},
         farmerLocation: {type: String, required: true},
         phoneNumber: {type: String, required: true},
-        imageURL: {type: String}
+        imageURL: String
     },
     { timestamps: true}
 )
