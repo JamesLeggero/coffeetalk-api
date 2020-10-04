@@ -62,7 +62,7 @@ router.post("/login", (req, res) => {
   if (req.body.username && req.body.password) {
     console.log(req.body.username);
     Roaster.findOne({ username: req.body.username }, (error, roaster) => {
-      if (error) console.log(error);
+      if (error) res.status(401).json(error);
       if (roaster) {
         console.log("Found roaster. Checking password...");
         if (bcrypt.compareSync(req.body.password, roaster.password)) {
@@ -79,15 +79,15 @@ router.post("/login", (req, res) => {
           });
         } else {
           console.log("Wrong password");
-          res.sendStatus(401);
+          res.status(401).json(error);
         }
       } else {
         console.log("Couldn't find roaster. Try signing up.");
-        res.sendStatus(401);
+        res.status(401).json(error);
       }
     });
   } else {
-    res.sendStatus(401);
+    res.status(401).json(error);
   }
 });
 
