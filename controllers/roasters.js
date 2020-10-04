@@ -45,16 +45,16 @@ router.post("/signup", (req, res) => {
             });
           } else {
             console.log("failed to create roaster");
-            res.sendStatus(401);
+            res.status(401).json(error);
           }
         });
       } else {
         console.log("Roaster already exists, try logging in instead");
-        res.sendStatus(401);
+        res.status(401).json(error);
       }
     });
   } else {
-    res.sendStatus(401);
+    res.status(401).json(error);
   }
 });
 //
